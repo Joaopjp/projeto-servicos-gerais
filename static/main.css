@@ -1,0 +1,174 @@
+header{
+    background: #811414;
+    padding: 20px 0;
+}
+
+#logo{
+    position: relative;
+    top: 20px;
+    right: 400px;
+}
+.titulo-principal{
+
+    font-size: 40px;
+    position: absolute;
+    top: 60px;
+    text-align: center;
+    padding-left: 850px;
+    color: white;
+    font-weight: bold;
+}
+
+.caixa{
+    width: 1060px;
+    position: relative;
+    margin: 0 auto;
+}
+
+nav{
+    position: absolute;
+    top: 80px;
+    right: 0;
+
+}
+
+nav li{
+    display:inline;
+    margin: 0 0 0 15px
+}
+
+nav a{
+    text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 22px;
+    text-decoration: none;
+
+}
+
+nav a:hover{
+    color: rgb(219, 83, 59);
+    text-decoration: underline;
+}
+
+main{
+    width:800px ;
+    margin: auto;
+}
+
+form{
+    text-align: center;
+    margin: 80px 0;
+}
+
+form label, form legend{
+
+    display: block;
+    font-size: 20px;
+    margin: 0 0 10px;
+}
+
+.input-padrao{
+    text-align: center;
+    display: block;
+    margin: 20px auto;
+    padding: 10px 25px;
+    width: 50%;
+}
+
+.checkbox{
+    margin: 20px 0;
+}
+
+.enviar{
+    position: relative;
+    top: 30px;
+    width: 30%;
+    display: block;
+    padding: 15px 0;
+    background: #811414;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    transition: 1s all;
+    cursor: pointer;
+}
+
+.enviar:hover{
+    background:#691010;
+    transform: scale(1.05);
+}
+
+.agenda{
+    position: relative;
+    top: 100px;
+    width: 30%;
+    display: block;
+    padding: 15px 0;
+    background: #811414;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    transition: 1s all;
+    cursor: pointer;
+}
+
+.agenda:hover{
+    background:#691010;
+    transform: scale(1.05);
+}
+
+.relatorios{
+    position: relative;
+    top: 170px;
+    width: 30%;
+    display: block;
+    padding: 15px 0;
+    background: #811414;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    transition: 1s all;
+    cursor: pointer;
+}
+
+.relatorios:hover{
+    background:#691010;
+    transform: scale(1.05);
+}
+
+.dashboard{
+    position: relative;
+    top: 240px;
+    width: 30%;
+    display: block;
+    padding: 15px 0;
+    background: #811414;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    transition: 1s all;
+    cursor: pointer;
+}
+
+.dashboard:hover{
+    background:#691010;
+    transform: scale(1.05);
+}
+
+
+
+footer{
+    background: #691010;
+    position: relative;
+    top: 500px;
+    padding: 30px 0;
+}
