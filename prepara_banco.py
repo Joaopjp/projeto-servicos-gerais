@@ -1,7 +1,6 @@
 import mysql.connector
 from mysql.connector import errorcode
-print("quero ir embora")
-print("não vai embora!!!")
+
 print("Conectando...")
 try:
     conn = mysql.connector.connect(
