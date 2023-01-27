@@ -3,16 +3,16 @@ from mysql.connector import errorcode
 
 print("Conectando...")
 try:
-      conn = mysql.connector.connect(
-            host='127.0.0.1',
-            user='root',
-            password='123456jp'
-      )
+    conn = mysql.connector.connect(
+      host='127.0.0.1',
+      user='root',
+      password='123456jp'
+    )
 except mysql.connector.Error as err:
-      if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print('Existe algo errado no nome de usuário ou senha')
-      else:
-            print(err)
+    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+        print('Existe algo errado no nome de usuário ou senha')
+    else:
+        print(err)
 
 cursor = conn.cursor()
 
@@ -24,68 +24,91 @@ cursor.execute("USE `servicosgerais`;")
 
 # criando tabelas
 TABLES = {}
+
+
 TABLES['Funcionarios'] = ('''
-      CREATE TABLE `Funcionarios` (
-      `Funcionario_Id` NOT NULL AUTO_INCREMENT,
-      `Funcionario_Nome` varchar(255) NOT NULL,
-      `Funcionario_Cargo` varchar(40) NOT NULL,
-      PRIMARY KEY (`Funcionario_Id`)
+      CREATE TABLE `funcionarios` (
+      `funcionario_id` int(11) NOT NULL AUTO_INCREMENT,
+      `funcionario_nome` varchar(255) NOT NULL,
+      `funcionario_cargo` varchar(255) NOT NULL,
+      `funcionario_email` varchar(255) NOT NULL,
+      `funcionario_login` varchar(255) NOT NULL,
+      `funcionario_senha` varchar(255) NOT NULL,
+      PRIMARY KEY (`funcionario_id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;''')
 
 
 TABLES['Servicos'] = ('''
-      CREATE TABLE `Servicos` (
-      `Servico_Id` NOT NULL AUTO_INCREMENT,
-      `Servico_Nome` varchar(300) NOT NULL,
-      PRIMARY KEY (`Servico_Id`)
+      CREATE TABLE `servicos` (
+      `servico_id` int(11) NOT NULL AUTO_INCREMENT,
+      `servico_nome` varchar(300) NOT NULL,
+      PRIMARY KEY (`servico_id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;''')
 
+
+TABLES['Setor'] = ('''
+      CREATE TABLE `setor` (
+      `setor_id` int(11) NOT NULL AUTO_INCREMENT,
+      `setor_nome` varchar(255) NOT NULL,
+      PRIMARY KEY (`setor_id`)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;''')
+
+
 for tabela_nome in TABLES:
-      tabela_sql = TABLES[tabela_nome]
-      try:
-            print('Criando tabela {}:'.format(tabela_nome), end=' ')
-            cursor.execute(tabela_sql)
-      except mysql.connector.Error as err:
-            if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
-                  print('Já existe')
-            else:
-                  print(err.msg)
-      else:
-            print('OK')
+    tabela_sql = TABLES[tabela_nome]
+    try:
+        print('Criando tabela {}:'.format(tabela_nome), end=' ')
+        cursor.execute(tabela_sql)
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_TABLE_EXISTS_ERROR:
+            print('Já existe')
+        else:
+            print(err.msg)
+    else:
+        print('OK')
+
 
 # inserindo usuarios
-Funcionarios = 'INSERT INTO Funcionarios (Funcionario_Nome, Funcionario_Cargo) VALUES (%s, %s)'
-Funcionarios = [
-      ("Livia Bueno", "Livia Bueno", "livia123"),
-      ("João Pedro", "JP", "joao123"),
-      ("Michele Fernandes", "Michele Fernandes", "michele123")
+funcionarios_sql = 'INSERT INTO funcionarios (funcionario_nome, funcionario_cargo, funcionario_email, ' \
+                        'funcionario_login, funcionario_senha) VALUES (%s, %s, %s, %s, %s)'
+funcionarios = [
+      ("Livia Bueno", "Compras", "livia.bueno@watchguard.com", "lbueno", "livia123"),
+      ("João Pedro", "TI", "joaopedro.jesus@watchguard.com", "jjesus", "joao123"),
+      ("Michele Fernandes", "Almoxarife", "michele.fernandes@watchguard.com", "mfernandes", "michele123")
 ]
-cursor.executemany(usuario_sql, usuarios)
+cursor.executemany(funcionarios_sql, funcionarios)
 
-cursor.execute('select * from jogoteca.usuarios')
-print(' -------------  Usuários:  -------------')
+cursor.execute('select * from servicosgerais.funcionarios')
+print(' -------------  Funcionários:  -------------')
 for user in cursor.fetchall():
     print(user[1])
 
-# inserindo jogos
-jogos_sql = 'INSERT INTO jogos (nome, categoria, console) VALUES (%s, %s, %s)'
-jogos = [
-      ('Tetris', 'Puzzle', 'Atari'),
-      ('God of War', 'Hack n Slash', 'PS2'),
-      ('Mortal Kombat', 'Luta', 'PS2'),
-      ('Valorant', 'FPS', 'PC'),
-      ('Crash Bandicoot', 'Hack n Slash', 'PS2'),
-      ('Need for Speed', 'Corrida', 'PS2'),
-]
-cursor.executemany(jogos_sql, jogos)
+# inserindo serviços
+servicos_sql = 'INSERT INTO servicos (servico_nome) VALUES (%s)'
 
-cursor.execute('select * from jogoteca.jogos')
-print(' -------------  Jogos:  -------------')
-for jogo in cursor.fetchall():
-    print(jogo[1])
+servicos = [("Limpeza da Cozinha")]
+
+cursor.execute(servicos_sql, servicos)
+
+cursor.execute('select * from servicosgerais.servicos')
+
+
+print(' -------------  Serviços:  -------------')
+for servicos in cursor.fetchall():
+    print(servicos[1])
+
+
+# inserindo setores
+setor_sql = 'INSERT INTO setor (setor_nome) VALUES (%s)'
+setor = [("TI")]
+cursor.execute(setor_sql, setor)
+
+cursor.execute('select * from servicosgerais.setor')
+print(' -------------  Setores:  -------------')
+for setor in cursor.fetchall():
+    print(setor[1])
 
 # commitando se não nada tem efeito
 conn.commit()
-
 cursor.close()
 conn.close()
