@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.dialects.mysql import TIME
 
 app = Flask(__name__)
 
@@ -21,11 +20,11 @@ db = SQLAlchemy(app)
 
 class Agenda(db.Model):
     agenda_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    agenda_data_programada = db.Column(db.Date, nullable=False)
+    agenda_data_programada = db.Column(db.Date(), nullable=False)
     agenda_hora_programada = db.Column(db.Time(), nullable=False)
     agenda_observacao = db.Column(db.String(1024), nullable=False)
-    agenda_data_realizada = db.Column(db.Date, nullable=True)
-    agenda_hora_realizada = db.Column(db.String(255), nullable=False)
+    agenda_data_realizada = db.Column(db.Date(), nullable=True)
+    agenda_hora_realizada = db.Column(db.Time(255), nullable=False)
     agenda_status = db.Column(db.String(255), nullable=False)
     setor_id_fk = db.Column(db.String(255), nullable=False)
     funcionario_id_fk = db.Column(db.String(255), nullable=False)
