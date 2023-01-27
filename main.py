@@ -52,8 +52,17 @@ class Funcionario(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.name
 
+#lista de Funcionarios#
+FuncionarioDepartamento1 = FuncionarioDepartamento('Eliana Domiciano', 'Administrativo')
+FuncionarioDepartamento2 = FuncionarioDepartamento('Marlene Covelo', 'Administrativo')
+FuncionarioDepartamento3 = FuncionarioDepartamento('João Pedro', 'TI')
+FuncionarioDepartamento4 = FuncionarioDepartamento('Michele Fernandes', 'Almoxarifado')
+FuncionarioDepartamento5 = FuncionarioDepartamento('Fernando Lau', 'Diretoria')
+FuncionarioDepartamento6 = FuncionarioDepartamento('Livia Bueno', 'Administrativo')
+lista_funcionario = [FuncionarioDepartamento1, FuncionarioDepartamento2, FuncionarioDepartamento3,
+                     FuncionarioDepartamento4, FuncionarioDepartamento5, FuncionarioDepartamento6]
 
-# lista de setores
+#lista de setores#
 setor_departamento1 = SetorDepartamento('Banheiro Masculino', 'Producao')
 setor_departamento2 = SetorDepartamento('Banheiro Feminino', 'Producao')
 setor_departamento3 = SetorDepartamento('Producao', 'Producao')
@@ -61,31 +70,43 @@ setor_departamento4 = SetorDepartamento('Sala Paris', 'Sala Reunião')
 setor_departamento5 = SetorDepartamento('Sala de Treinamento', 'Sala Reunião')
 setor_departamento6 = SetorDepartamento('Sala Madrid', 'Sala Reunião')
 setor_departamento7 = SetorDepartamento('Sala Beijing', 'Sala Reunião')
-lista_setores = [setor_departamento1, setor_departamento2, setor_departamento3, setor_departamento4, setor_departamento5, setor_departamento6, setor_departamento7]
+lista_setores = [setor_departamento1, setor_departamento2, setor_departamento3, setor_departamento4,
+                 setor_departamento5, setor_departamento6, setor_departamento7]
+#lista de Serviços#
+servico1 = Servico('Limpeza da Sala')
+servico2 = Servico('Limpeza do Ar Condicionado')
+servico3 = Servico('Organização dos Materiais de Limpeza')
+servico4 = Servico('Recolhimento dos Lixos')
+lista_servicos = [servico1, servico2, servico3, servico4]
 
+app = Flask(__name__)
+app.secret_key = 'br_token'
 
 @app.route('/funcionarios')
 def funcionarios():
-    FuncionarioDepartamento1 = FuncionarioDepartamento('Eliana Domiciano', 'Administrativo')
-    FuncionarioDepartamento2 = FuncionarioDepartamento('Marlene Covelo', 'Administrativo')
-    FuncionarioDepartamento3 = FuncionarioDepartamento('João Pedro', 'TI')
-    FuncionarioDepartamento4 = FuncionarioDepartamento('Michele Fernandes', 'Almoxarifado')
-    FuncionarioDepartamento5 = FuncionarioDepartamento('Fernando Lau', 'Diretoria')
-    FuncionarioDepartamento6 = FuncionarioDepartamento('Livia Bueno', 'Administrativo')
-    lista_funcionario = [FuncionarioDepartamento1, FuncionarioDepartamento2, FuncionarioDepartamento3, FuncionarioDepartamento4, FuncionarioDepartamento5, FuncionarioDepartamento6]
-    return render_template('funcionarios.html', titulo='Funcionários', novofuncionario=lista_funcionario)
+    return render_template('funcionarios.html', titulo='Funcionários', l_funcionario=lista_funcionario)
+
+
+@app.route('/novofuncionario')
+def novofuncionario():
+    return render_template('novofuncionario.html', titulo='Cadastro de Novo Funcionário')
+
+@app.route('/cadastrarnovofuncionario', methods=['POST',])
+def cadastrarnovofuncionario():
+    novo_funcionario = request.form['novo_funcionario']
+    novoFuncionarioDepartamento=request.form['novoFuncionarioDepartamento']
+    NovoFuncionario=FuncionarioDepartamento(novo_funcionario, novoFuncionarioDepartamento)
+    lista_funcionario.append(NovoFuncionario)
+    return redirect('/funcionarios')
 
 
 @app.route('/setores')
 def setores():
-
     return render_template('setores.html', titulo='Salas/Setores', l_setores=lista_setores)
-
 
 @app.route('/novosetor')
 def novo_setor():
     return render_template('novosetor.html', titulo='Novo Setor')
-
 
 @app.route('/cadastrarsetor', methods=['POST',])
 def cadastrarsetor():
@@ -93,17 +114,49 @@ def cadastrarsetor():
     departamento=request.form['departamento']
     salas=SetorDepartamento(novo_setor, departamento)
     lista_setores.append(salas)
-    return render_template('setores.html', titulo='Salas/Setores', l_setores=lista_setores)
+    return redirect('/setores')
 
 
 @app.route('/servicos')
 def servicos():
-    servico1 = Servico('Limpeza da Sala')
-    servico2 = Servico('Limpeza do Ar Condicionado')
-    servico3 = Servico('Organização dos Materiais de Limpeza')
-    servico4 = Servico('Recolhimento dos Lixos')
-    lista_servicos = [servico1, servico2, servico3, servico4]
     return render_template('servicos.html', titulo='Serviços', servicos=lista_servicos)
 
+
+@app.route('/novoservico')
+def novoservico():
+    return render_template('novoservico.html', titulo='Novo Serviço')
+
+@app.route('/cadastrarservico', methods=['POST',])
+def cadastrarservico():
+    novo_servico=request.form['novo_servico']
+    Novo_Servico=Servico(novo_servico)
+    lista_servicos.append(Novo_Servico)
+    return redirect('/servicos')
+
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/homepage')
+def homepage():
+    return render_template('homepage.html')
+
+@app.route('/autenticar', methods=['POST',])
+def autenticar():
+    if 'brtoken@1234!' == request.form['senha']:
+        session['usuario_logado'] = request.form['usuario']
+        flash(session['usuario_logado'] + 'Usuario logado com sucesso!')
+        return redirect('/homepage')
+    else:
+        flash('Usuario não logado!')
+        return redirect('/login')
+
+
+
+
+@app.route('/homepage_cadastro')
+def homepage_cadastro():
+    return render_template('/homepage_cadastro.html')
 
 app.run(debug=True)

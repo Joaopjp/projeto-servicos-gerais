@@ -1,0 +1,20 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+        <table class="table table-striped table-responsive-bordered">
+            <tr>
+                <th>Funcionário</th>
+                <th>Departamento</th>
+            </tr>
+            <tbody>
+
+                {% for cadaNovoFuncionario in l_funcionario %}
+                <tr>
+                    <td>{{ cadaNovoFuncionario.pessoa }}</td>
+                    <td>{{ cadaNovoFuncionario.novoFuncionarioDepartamento }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock%}

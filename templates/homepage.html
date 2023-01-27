@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <title>Homepage - WG</title>
+
+        <link rel="stylesheet" href="static/homepage.css">
+    </head>
+    <body>
+
+    <main>
+        <form>
+            <!--- link para fazer o botão, com a função -->
+            <a href={{url_for('homepage_cadastro')}}><input type="button" class="enviar" value="Cadastros"></a>
+            <a href={{url_for('servicos')}}><button class="agenda">Agenda</button></a>
+            <a href={{url_for('servicos')}}><button class="relatorios">Relatórios</button></a>
+            <a href="producao.html"><button class="dashboard">Dashboard</button></a>
+
+
+        </form>
+
+    </main>
+        <footer>
+
+            <p class="copyright">&copy; Serviços Gerais - WG</p>
+        </footer>
+    </body>
+</html>

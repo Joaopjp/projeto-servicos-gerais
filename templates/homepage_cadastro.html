@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ titulo }}</title>
+        <link rel="stylesheet" href="{{ url_for ('static', filename='bootstrap.css') }}">
+    </head>
+    <body>
+
+    <main>
+        <div class="d-grid gap-2">
+            <!--- link para fazer o botão, com a função -->
+            <a href={{url_for('novoservico')}}><input type="button" class="btn btn-primary" value="Cadastrar Novo Serviço"></a>
+            <a href={{url_for('novo_setor')}}><input type="button" class="btn btn-primary" value="Cadastrar Novo Setor"></a>
+            <a href={{url_for('novofuncionario')}}><input type="button" class="btn btn-primary" value="Cadastrar Novo Funcionário"></a>
+            <a href={{url_for('novoservico')}}><input type="button" class="btn btn-primary" value="Definir Agenda"></a>
+
+        </div>
+    </main>
+        <footer>
+
+            <p class="copyright">&copy; Serviços Gerais - WG</p>
+        </footer>
+    </body>
+</html>

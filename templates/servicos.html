@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+        <table class="table table-striped table-responsive-bordered">
+            <tr>
+                <th>Serviços</th>
+            </tr>
+            <tbody>
+                {% for NovoServico in servicos %}
+                <tr>
+                    <td>{{ NovoServico.servico }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock%}

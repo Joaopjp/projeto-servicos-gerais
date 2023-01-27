@@ -1,0 +1,17 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+  <form action="/cadastrarnovofuncionario" method="post">
+    <fieldset>
+      <div class="form-group">
+        <label for="novo_funcionario"> Funcionário</label>
+        <input type="text" id="novo_funcionario" name="novo_funcionario" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="novoFuncionarioDepartamento">Departamento</label>
+        <input type="text" id="novoFuncionarioDepartamento" name="novoFuncionarioDepartamento" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+    </fieldset>
+  </form>
+{% endblock%}
