@@ -26,8 +26,8 @@ cursor.execute("USE `servicosgerais`;")
 TABLES = {}
 
 
-TABLES['Funcionarios'] = ('''
-      CREATE TABLE `funcionarios` (
+TABLES['Funcionario'] = ('''
+      CREATE TABLE `funcionario` (
       `funcionario_id` int(11) NOT NULL AUTO_INCREMENT,
       `funcionario_nome` varchar(255) NOT NULL,
       `funcionario_cargo` varchar(255) NOT NULL,
@@ -69,7 +69,7 @@ for tabela_nome in TABLES:
 
 
 # inserindo usuarios
-funcionarios_sql = 'INSERT INTO funcionarios (funcionario_nome, funcionario_cargo, funcionario_email, ' \
+funcionarios_sql = 'INSERT INTO funcionario (funcionario_nome, funcionario_cargo, funcionario_email, ' \
                         'funcionario_login, funcionario_senha) VALUES (%s, %s, %s, %s, %s)'
 funcionarios = [
       ("Livia Bueno", "Compras", "livia.bueno@watchguard.com", "lbueno", "livia123"),
@@ -78,7 +78,7 @@ funcionarios = [
 ]
 cursor.executemany(funcionarios_sql, funcionarios)
 
-cursor.execute('select * from servicosgerais.funcionarios')
+cursor.execute('select * from servicosgerais.funcionario')
 print(' -------------  Funcionários:  -------------')
 for user in cursor.fetchall():
     print(user[1])

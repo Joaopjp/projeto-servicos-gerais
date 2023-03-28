@@ -5,13 +5,19 @@
             <tr>
                 <th>Funcionário</th>
                 <th>Departamento</th>
+                <th>E-Mail</th>
+                <th>Login</th>
+                <th>Senha</th>
             </tr>
             <tbody>
 
-                {% for cadaNovoFuncionario in l_funcionario %}
+                {% for cadaNovoFuncionario in func %}
                 <tr>
-                    <td>{{ cadaNovoFuncionario.pessoa }}</td>
-                    <td>{{ cadaNovoFuncionario.novoFuncionarioDepartamento }}</td>
+                    <td>{{ cadaNovoFuncionario.funcionario_nome }}</td>
+                    <td>{{ cadaNovoFuncionario.funcionario_cargo }}</td>
+                    <td>{{ cadaNovoFuncionario.funcionario_email }}</td>
+                    <td>{{ cadaNovoFuncionario.funcionario_login }}</td>
+                    <td>{{ cadaNovoFuncionario.funcionario_senha  }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
