@@ -3,23 +3,23 @@ from main import app, db
 from models import Agenda, Setor, Servico, Funcionario
 
 
-@app.route('/funcionarios')
+@app.route('/funcionarios')   # listagem de funcionarios cadastrados
 def funcionarios():
     lista_funcionarios = Funcionario.query.order_by(Funcionario.funcionario_id)
     return render_template('funcionarios.html', titulo='Funcionários', func=lista_funcionarios)
 
 
-@app.route('/novofuncionario')
+@app.route('/novofuncionario')  # Formulário para o cadastro de novos funcionários
 def novofuncionario():
     return render_template('novofuncionario.html', titulo='Cadastro de Novo Funcionário')
 
 
-@app.route('/criarnovofuncionario', methods=['Post', ])
+@app.route('/criarnovofuncionario', methods=['Post', ])  # metodo POST aqui salva as informações inseridas no BD
 def criarnovofuncionario():
     nome = request.form['nome_funcionario']
     cargo = request.form['novoCargo']
     email = request.form['funcionarioEmail']
-    login= request.form['funcionarioLogin']
+    login = request.form['funcionarioLogin']
     senha = request.form['funcionarioSenha']
 
     funcionario = Funcionario.query.filter_by(funcionario_nome=nome).first()
@@ -37,23 +37,32 @@ def criarnovofuncionario():
     return redirect(url_for('funcionarios'))
 
 
-@app.route('/setores')
+@app.route('/setores')  # listagem de setores
 def setores():
-    return render_template('setores.html', titulo='Salas/Setores', l_setores=lista_setores)
+    lista_setores = Setor.query.order_by(Setor.setor_id)
+    return render_template('setores.html', titulo='Salas/Setores',  lista_setores=lista_setores)
 
 
-@app.route('/novosetor')
+@app.route('/novosetor')  # formulário de cadastro de novo setor
 def novo_setor():
     return render_template('novosetor.html', titulo='Novo Setor')
 
 
 @app.route('/cadastrarsetor', methods=['POST',])
 def cadastrarsetor():
-    novo_setor=request.form['novo_setor']
-    departamento=request.form['departamento']
-    salas=SetorDepartamento(novo_setor, departamento)
-    lista_setores.append(salas)
-    return redirect('/setores')
+    nome = request.form['novo_setor']
+    setor = Setor.query.filter_by(setor_nome=nome).first()
+
+    if setor:
+        flash('Setor Existente')
+        return redirect(url_for('setores'))
+
+    novo_setor = Setor(setor_nome=nome)
+
+    db.session.add(novo_setor)
+    db.session.commit()
+
+    return redirect(url_for('setores'))
 
 
 @app.route('/servicos')

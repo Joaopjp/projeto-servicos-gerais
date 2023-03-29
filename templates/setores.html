@@ -4,15 +4,15 @@
         <table class="table table-striped table-responsive-bordered">
             <tr>
                 <th>Sala</th>
-                <th>Departamento</th>
+
 
             </tr>
             <tbody>
             <!--- para cada setor na lista de setores, escreve o setor -->
-                {% for sala in l_setores %}
+                {% for setor in lista_setores %}
                 <tr>
-                    <td>{{ sala.setor }}</td>
-                    <td>{{ sala.departamento }}</td>
+                    <td>{{ setor.setor_nome }}</td>
+
                 </tr>
                 {% endfor %}
             </tbody>
