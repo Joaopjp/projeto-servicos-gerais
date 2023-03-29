@@ -6,9 +6,9 @@
                 <th>Serviços</th>
             </tr>
             <tbody>
-                {% for NovoServico in servicos %}
+                {% for servico in lista_servicos %}
                 <tr>
-                    <td>{{ NovoServico.servico }}</td>
+                    <td>{{ servico.servico_nome }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

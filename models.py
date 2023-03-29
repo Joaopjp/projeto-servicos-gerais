@@ -1,5 +1,6 @@
 from main import db
 
+
 class Agenda(db.Model):
     agenda_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     agenda_data_programada = db.Column(db.Date(), nullable=False)

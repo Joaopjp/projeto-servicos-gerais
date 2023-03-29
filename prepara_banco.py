@@ -38,8 +38,8 @@ TABLES['Funcionario'] = ('''
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;''')
 
 
-TABLES['Servicos'] = ('''
-      CREATE TABLE `servicos` (
+TABLES['Servico'] = ('''
+      CREATE TABLE `servico` (
       `servico_id` int(11) NOT NULL AUTO_INCREMENT,
       `servico_nome` varchar(300) NOT NULL,
       PRIMARY KEY (`servico_id`)
@@ -52,6 +52,24 @@ TABLES['Setor'] = ('''
       `setor_nome` varchar(255) NOT NULL,
       PRIMARY KEY (`setor_id`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;''')
+
+TABLES['Agenda'] = ('''
+    CREATE TABLE `agenda`(
+    `agenda_id` int(11) NOT NULL AUTO_INCREMENT,
+    `agenda_nome` varchar(300),
+    `agenda_data_programada` date,
+    `agenda_hora_programada` time,
+    `agenda_observacao` varchar(1000),
+    `agenda_data_realizada` date,
+    `agenda_hora_realizada` time,
+    `setor_id_fk` int,
+    `funcionario_id_fk` int,
+    `servico_id_fk` int,
+    PRIMARY KEY(`agenda_id`),
+    FOREIGN kEY(`setor_id_fk`) REFERENCES setor(`setor_id`),
+    FOREIGN KEY(`funcionario_id_fk`) REFERENCES funcionario(`funcionario_id`),
+    FOREIGN KEY(`servico_id_fk`) REFERENCES servico(`servico_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;''')
 
 
 for tabela_nome in TABLES:
@@ -84,18 +102,18 @@ for user in cursor.fetchall():
     print(user[1])
 
 # inserindo serviços
-servicos_sql = 'INSERT INTO servicos (servico_nome) VALUES (%s)'
+servicos_sql = 'INSERT INTO servico (servico_nome) VALUES (%s)'
 
-servicos = [("Limpeza da Cozinha")]
+servico = [("Limpeza da Cozinha")]
 
-cursor.execute(servicos_sql, servicos)
+cursor.execute(servicos_sql, servico)
 
-cursor.execute('select * from servicosgerais.servicos')
+cursor.execute('select * from servicosgerais.servico')
 
 
 print(' -------------  Serviços:  -------------')
-for servicos in cursor.fetchall():
-    print(servicos[1])
+for servico in cursor.fetchall():
+    print(servico[1])
 
 
 # inserindo setores

@@ -2,7 +2,7 @@
 
 {% block conteudo %}
 
-  <form action="/cadastrarservico" method="post">
+  <form action="{{ url_for('cadastrarservico') }}" method="post" enctype="multipart/form-data">
     <fieldset>
       <div class="form-group">
         <label for="novo_servico"> Cadastrar Novo serviço</label>

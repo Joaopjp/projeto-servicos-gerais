@@ -48,7 +48,7 @@ def novo_setor():
     return render_template('novosetor.html', titulo='Novo Setor')
 
 
-@app.route('/cadastrarsetor', methods=['POST',])
+@app.route('/cadastrarsetor', methods=['POST', ])
 def cadastrarsetor():
     nome = request.form['novo_setor']
     setor = Setor.query.filter_by(setor_nome=nome).first()
@@ -67,7 +67,8 @@ def cadastrarsetor():
 
 @app.route('/servicos')
 def servicos():
-    return render_template('servicos.html', titulo='Serviços', servicos=lista_servicos)
+    lista_servicos = Servico.query.order_by(Servico.servico_id)
+    return render_template('servicos.html', titulo='Serviços', lista_servicos=lista_servicos)
 
 
 @app.route('/novoservico')
@@ -75,12 +76,21 @@ def novoservico():
     return render_template('novoservico.html', titulo='Novo Serviço')
 
 
-@app.route('/cadastrarservico', methods=['POST',])
+@app.route('/cadastrarservico', methods=['POST', ])
 def cadastrarservico():
-    novo_servico=request.form['novo_servico']
-    Novo_Servico=Servico(novo_servico)
-    lista_servicos.append(Novo_Servico)
-    return redirect('/servicos')
+    nome = request.form['novo_servico']
+    servico = Servico.query.filter_by(servico_nome=nome).first()
+
+    if servico:
+        flash('Serviço Existente')
+        return redirect(url_for('servicos'))
+
+    novo_servico = Servico(servico_nome=nome)
+
+    db.session.add(novo_servico)
+    db.session.commit()
+
+    return redirect(url_for('servicos'))
 
 
 @app.route('/login')
@@ -98,7 +108,7 @@ def home():
     return redirect(url_for('homepage'))
 
 
-@app.route('/autenticar', methods=['POST',])
+@app.route('/autenticar', methods=['POST', ])
 def autenticar():
     if 'brtoken@1234!' == request.form['senha']:
         session['usuario_logado'] = request.form['usuario']
