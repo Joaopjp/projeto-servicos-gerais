@@ -15,26 +15,26 @@ def novofuncionario():
 
 
 @app.route('/criarnovofuncionario', methods=['Post', ])
-def criarfuncionario():
-    nome = request.form['novo_funcionario']
-    departamento = request.form['novoFuncionarioDepartamento']
+def criarnovofuncionario():
+    nome = request.form['nome_funcionario']
+    cargo = request.form['novoCargo']
+    email = request.form['funcionarioEmail']
+    login= request.form['funcionarioLogin']
+    senha = request.form['funcionarioSenha']
 
-    funcionario = Funcionario.query.filter_by(nome=nome).first()
+    funcionario = Funcionario.query.filter_by(funcionario_nome=nome).first()
 
     if funcionario:
-        flash('funcionario existente')
+        flash('funcionário existente')
         return redirect(url_for('funcionarios'))
 
-    novo_funcionario = Funcionario()
+    novo_funcionario = Funcionario(funcionario_nome=nome, funcionario_cargo=cargo, funcionario_email=email,
+                                   funcionario_login=login, funcionario_senha=senha)
 
+    db.session.add(novo_funcionario)
+    db.session.commit()
 
-@app.route('/cadastrarnovofuncionario', methods=['POST',])
-def cadastrarnovofuncionario():
-    novo_funcionario = request.form['novo_funcionario']
-    novoFuncionarioDepartamento=request.form['novoFuncionarioDepartamento']
-    NovoFuncionario=FuncionarioDepartamento(novo_funcionario, novoFuncionarioDepartamento)
-    lista_funcionario.append(NovoFuncionario)
-    return redirect('/funcionarios')
+    return redirect(url_for('funcionarios'))
 
 
 @app.route('/setores')
@@ -87,6 +87,7 @@ def homepage():
 @app.route('/')
 def home():
     return redirect(url_for('homepage'))
+
 
 @app.route('/autenticar', methods=['POST',])
 def autenticar():

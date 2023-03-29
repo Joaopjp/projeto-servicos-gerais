@@ -1,20 +1,15 @@
 {% extends "template.html" %}
 
 {% block conteudo %}
-  <form action="/cadastrarnovofuncionario" method="post">
+  <form action="{{ url_for('criarnovofuncionario') }}" method="post" enctype="multipart/form-data">
     <fieldset>
       <div class="form-group">
-        <label for="novo_funcionario"> Funcionário</label>
-        <input type="text" id="novo_funcionario" name="novo_funcionario" class="form-control">
+        <label for="nome_funcionario">Nome Funcionário</label>
+        <input type="text" id="nome_funcionario" name="nome_funcionario" class="form-control">
       </div>
       <div class="form-group">
-        <label for="novoFuncionarioDepartamento">Departamento</label>
-        <input type="text" id="novoFuncionarioDepartamento" name="novoFuncionarioDepartamento" class="form-control">
-      </div>
-
-      <div class="form-group">
-        <label for="novoFuncionarioDepartamento">Cargo</label>
-        <input type="text" id="funcionarioCargo" name="funcionarioCargo" class="form-control">
+        <label for="novoCargo">Cargo</label>
+        <input type="text" id="novoCargo" name="novoCargo" class="form-control">
       </div>
 
       <div class="form-group">
