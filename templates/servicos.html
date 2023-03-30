@@ -9,6 +9,9 @@
                 {% for servico in lista_servicos %}
                 <tr>
                     <td>{{ servico.servico_nome }}</td>
+                    <td>
+                        <a href="{{  url_for('editarservico', id=servico.servico_id)  }}">Editar</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

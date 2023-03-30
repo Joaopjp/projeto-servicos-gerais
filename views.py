@@ -48,7 +48,7 @@ def novo_setor():
     return render_template('novosetor.html', titulo='Novo Setor')
 
 
-@app.route('/cadastrarsetor', methods=['POST', ])
+@app.route('/cadastrarsetor', methods=['POST', ])  # metodo POST aqui salva as informações inseridas no BD
 def cadastrarsetor():
     nome = request.form['novo_setor']
     setor = Setor.query.filter_by(setor_nome=nome).first()
@@ -65,18 +65,24 @@ def cadastrarsetor():
     return redirect(url_for('setores'))
 
 
-@app.route('/servicos')
+@app.route('/editarsetor/<int:id>')
+def editarsetor(id):
+    setor = Setor.query.filter_by(setor_id=id).first()
+    return render_template('editar_setor.html', titulo='editando setor', setor=setor)
+
+
+@app.route('/servicos')  # listagem dos serviços
 def servicos():
     lista_servicos = Servico.query.order_by(Servico.servico_id)
     return render_template('servicos.html', titulo='Serviços', lista_servicos=lista_servicos)
 
 
-@app.route('/novoservico')
+@app.route('/novoservico')  # formulário de cadastrar novo serviço
 def novoservico():
     return render_template('novoservico.html', titulo='Novo Serviço')
 
 
-@app.route('/cadastrarservico', methods=['POST', ])
+@app.route('/cadastrarservico', methods=['POST', ])  # metodo POST aqui salva as informações inseridas no BD
 def cadastrarservico():
     nome = request.form['novo_servico']
     servico = Servico.query.filter_by(servico_nome=nome).first()
@@ -88,6 +94,23 @@ def cadastrarservico():
     novo_servico = Servico(servico_nome=nome)
 
     db.session.add(novo_servico)
+    db.session.commit()
+
+    return redirect(url_for('servicos'))
+
+
+@app.route('/editarservico/<int:id>')
+def editarservico(id):
+    servico = Servico.query.filter_by(servico_id=id).first()
+    return render_template('editar_servico.html', titulo='editando Serviço', servico=servico)
+
+
+@app.route('/atualizarservico', methods=['POST', ])
+def atualizarservico():
+    servico = Servico.query.filter_by(servico_id=request.form['id']).first()
+    servico.servico_nome = request.form['servico_nome']
+
+    db.session.add(servico)
     db.session.commit()
 
     return redirect(url_for('servicos'))
