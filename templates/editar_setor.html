@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+
+  <form action="{{ url_for('atualizarsetor') }}" method="post">
+    <fieldset>
+      <input type="hidden" name="id" value="{{ setor.setor_id }}">
+      <div class="form-group">
+        <label for="setor_nome"> Cadastrar Novo Setor</label>
+        <input type="text" id="setor_nome" name="setor_nome" class="form-control" value="{{  setor.setor_nome }}">
+      </div>
+      <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+    </fieldset>
+  </form>
+
+{% endblock%}

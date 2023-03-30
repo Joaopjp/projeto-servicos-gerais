@@ -10,7 +10,11 @@
                 {% for setor in lista_setores %}
                 <tr>
                     <td>{{ setor.setor_nome }}</td>
+                    <td>
+                        <a href="{{  url_for('editarsetor', id=setor.setor_id)  }}">Editar</a>
+                    </td>
                 </tr>
+
                 {% endfor %}
             </tbody>
         </table>

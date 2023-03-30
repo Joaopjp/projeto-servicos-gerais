@@ -71,6 +71,17 @@ def editarsetor(id):
     return render_template('editar_setor.html', titulo='editando setor', setor=setor)
 
 
+@app.route('/atualizarsetor', methods=['POST', ])
+def atualizarsetor():
+    setor = Setor.query.filter_by(setor_id=request.form['id']).first()
+    setor.setor_nome = request.form['setor_nome']
+
+    db.session.add(setor)
+    db.session.commit()
+
+    return redirect(url_for('setores'))
+
+
 @app.route('/servicos')  # listagem dos serviços
 def servicos():
     lista_servicos = Servico.query.order_by(Servico.servico_id)
