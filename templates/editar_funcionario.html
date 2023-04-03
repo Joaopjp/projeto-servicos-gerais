@@ -1,0 +1,34 @@
+{% extends "template.html" %}
+
+{% block conteudo %}
+  <form action="{{ url_for('atualizarfuncionario') }}" method="post">
+    <fieldset>
+      <input type="hidden" name="id" value="{{ func.funcionario_id }}">
+      <div class="form-group">
+        <label for="Nome">Nome Funcionário</label>
+        <input type="text" id="Nome" name="Nome" class="form-control" value="{{ func.funcionario_nome }}">
+      </div>
+      <div class="form-group">
+        <label for="Cargo">Cargo</label>
+        <input type="text" id="Cargo" name="Cargo" class="form-control" value="{{ func.funcionario_cargo }}">
+      </div>
+
+      <div class="form-group">
+        <label for="Email">E-Mail</label>
+        <input type="text" id="Email" name="Email" class="form-control" value="{{ func.funcionario_email }}">
+      </div>
+
+      <div class="form-group">
+        <label for="Login">Login</label>
+        <input type="text" id="Login" name="Login" class="form-control" value="{{ func.funcionario_login }}">
+      </div>
+
+      <div class="form-group">
+        <label for="Senha">Senha</label>
+        <input type="text" id="Senha" name="Senha" class="form-control" value="{{ func.funcionario_senha }}">
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
+    </fieldset>
+  </form>
+{% endblock%}

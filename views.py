@@ -37,6 +37,26 @@ def criarnovofuncionario():
     return redirect(url_for('funcionarios'))
 
 
+@app.route('/editarfuncionario/<int:id>')
+def editarfuncionario(id):
+    funcionario = Funcionario.query.filter_by(funcionario_id=id).first()
+    return render_template('editar_funcionario.html', titulo='editando funcionário', func=funcionario)
+
+
+@app.route('/atualizarfuncionario', methods=['POST', ])  # metodo POST aqui salva as informações inseridas no BD
+def atualizarfuncionario():
+    funcionario = Funcionario.query.filter_by(funcionario_id=request.form['id']).first()
+    funcionario.funcionario_nome = request.form['Nome']
+    funcionario.funcionario_cargo = request.form['Cargo']
+    funcionario.funcionario_email = request.form['Email']
+    funcionario.funcionario_login = request.form['Login']
+    funcionario.funcionario_senha = request.form['Senha']
+
+    db.session.add(funcionario)
+    db.session.commit()
+    return redirect(url_for('funcionarios'))
+
+
 @app.route('/setores')  # listagem de setores
 def setores():
     lista_setores = Setor.query.order_by(Setor.setor_id)
