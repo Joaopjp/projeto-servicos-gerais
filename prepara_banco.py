@@ -62,11 +62,12 @@ TABLES['Agenda'] = ('''
     `agenda_observacao` varchar(1000),
     `agenda_data_realizada` date,
     `agenda_hora_realizada` time,
-    `setor_id_fk` int,
+    `agenda_status` varchar(300),
+    `setor_id_fk` int,    
     `funcionario_id_fk` int,
     `servico_id_fk` int,
     PRIMARY KEY(`agenda_id`),
-    FOREIGN kEY(`setor_id_fk`) REFERENCES setor(`setor_id`),
+    FOREIGN KEY(`setor_id_fk`) REFERENCES setor(`setor_id`),
     FOREIGN KEY(`funcionario_id_fk`) REFERENCES funcionario(`funcionario_id`),
     FOREIGN KEY(`servico_id_fk`) REFERENCES servico(`servico_id`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;''')
@@ -126,7 +127,26 @@ print(' -------------  Setores:  -------------')
 for setor in cursor.fetchall():
     print(setor[1])
 
+# inserindo agenda
+agenda_sql = 'INSERT INTO agenda (agenda_nome, agenda_data_programada, agenda_hora_programada, agenda_observacao, ' \
+             'agenda_data_realizada, agenda_hora_realizada, agenda_status, setor_id_fk, funcionario_id_fk, ' \
+             'servico_id_fk) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+agenda = [("Limpeza da Cozinha", "2023-04-15", "10:00:00", "Limpeza completa da cozinha", "2023-04-15", "12:00:00", "Realizado", 1, 2, 1)]
+
+cursor.executemany(agenda_sql, agenda)
+
+
+cursor.execute('select * from servicosgerais.agenda')
+print(' -------------  Agenda:  -------------')
+for agen in cursor.fetchall():
+    print(agen[1])
+
+
 # commitando se não nada tem efeito
 conn.commit()
 cursor.close()
 conn.close()
+
+
+
+

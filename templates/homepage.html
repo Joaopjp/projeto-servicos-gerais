@@ -3,25 +3,40 @@
     <head>
         <meta charset="UTF-8">
         <title>Homepage - WG</title>
+        <link rel="stylesheet" href="{{ url_for ('static', filename='bootstrap.css') }}">
 
-        <link rel="stylesheet" href="static/homepage.css">
     </head>
     <body>
 
-    <main>
-        <form>
-            <!--- link para fazer o botão, com a função -->
-            <a href={{url_for('homepage_cadastro')}}><input type="button" class="enviar" value="Cadastros"></a>
-            <a href={{url_for('servicos')}}><button class="agenda">Agenda</button></a>
-            <a href={{url_for('servicos')}}><button class="relatorios">Relatórios</button></a>
-            <a href="producao.html"><button class="dashboard">Dashboard</button></a>
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Cadastros</h5>
+                <p class="card-text">Cadastrar: Funcionários, Serviços, Salas e Agenda.</p>
+                <a href={{url_for('homepage_cadastro')}} class="btn btn-primary">Cadastros</a>
+            </div>
+            <div class="card-body">
+                <img src="..." class="card-img-top" alt="...">
+                <h5 class="card-title">Agenda</h5>
+                <p class="card-text">Visualizar agendas</p>
+                <a href={{url_for('homepage')}} class="btn btn-primary">Agenda</a>
+            </div>
+            <div class="card-body">
+                <img src="..." class="card-img-top" alt="...">
+                <h5 class="card-title">Relatórios</h5>
+                <p class="card-text">Visualizar relatórios</p>
+                <a href={{url_for('homepage')}} class="btn btn-primary">Relatórios</a>
+            </div>
+            <div class="card-body">
+                <img src="..." class="card-img-top" alt="...">
+                <h5 class="card-title">Dashboard</h5>
+                <p class="card-text">Visualizar Dashboard</p>
+                <a href={{url_for('homepage')}} class="btn btn-primary">Dashboard</a>
+            </div>
+        </div>
 
 
-        </form>
-
-    </main>
         <footer>
-
             <p class="copyright">&copy; Serviços Gerais - WG</p>
         </footer>
     </body>

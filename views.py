@@ -162,6 +162,11 @@ def home():
     return redirect(url_for('homepage'))
 
 
+@app.route('/listagem')
+def listagem():
+    return render_template('listagem.html')
+
+
 @app.route('/autenticar', methods=['POST', ])
 def autenticar():
     if 'brtoken@1234!' == request.form['senha']:
